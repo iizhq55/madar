@@ -36890,12 +36890,12 @@ import { readFile } from "node:fs/promises";
 import { join as join3, resolve, sep, extname } from "node:path";
 
 // plugin/src/config.ts
-var CATALOG_URL = process.env.MADAR_CATALOG_URL ?? "";
-var MADAR_REPO = process.env.MADAR_REPO ?? "";
+var CATALOG_URL = process.env.MADAR_CATALOG_URL ?? "https://iizhq55.github.io/madar/catalog.json";
+var MADAR_REPO = process.env.MADAR_REPO ?? "iizhq55/madar";
 var SELF_ID = "@madar";
 var REPO2 = /^[A-Za-z0-9][A-Za-z0-9_.-]*\/[A-Za-z0-9_.-]+$/;
 var validRepo = (r) => !!r && REPO2.test(r);
-var SETUPS_REPO = process.env.MADAR_SETUPS_REPO ?? "";
+var SETUPS_REPO = process.env.MADAR_SETUPS_REPO ?? "iizhq55/madar";
 var LONG_CODE = /^MADAR-X(?:[A-Za-z0-9_-]{5}){1,50}$/;
 var SUPPORT_URL = process.env.MADAR_SUPPORT_URL ?? "https://ko-fi.com/iizhq55";
 var validSupport = (u) => !!u && /^https:\/\/(ko-fi\.com|www\.buymeacoffee\.com|github\.com\/sponsors|opencollective\.com|www\.patreon\.com)\/[A-Za-z0-9_.-]+\/?$/.test(u);

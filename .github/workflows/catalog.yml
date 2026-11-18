@@ -1,0 +1,126 @@
+name: Build catalog
+
+# Three jobs, so code from the tools being tested can never touch what gets published:
+#   plan    reads the sources with a read-only token; runs no third-party code
+#   works   starts each new tool once; no token, no secrets, results file only
+#   publish checks the plan's fingerprint (a job output the works job cannot change), fills in the
+#           results (plain true/false data), re-validates, and deploys the site in the same job
+#           (the only job allowed to write the site; no gap between packaging and deploying)
+# The previous run's state is read back from the published site, not from a cache a tool could write to.
+
+on:
+  schedule:
+    - cron: '7 * * * *' # every hour
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: catalog
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: read
+    outputs:
+      sha: ${{ steps.pack.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Read sources and scan code (no third-party code runs here)
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          repo="${GITHUB_REPOSITORY#*/}"
+          if [ "${repo,,}" = "${owner}.github.io" ]; then site="https://${owner}.github.io"; else site="https://${owner}.github.io/${repo}"; fi
+          PAGES_URL="${MADAR_PAGES_URL:-$site}"
+          node scripts/build-catalog.ts --defer-works --prev-url "$PAGES_URL/state.json"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MADAR_PAGES_URL: ${{ vars.MADAR_PAGES_URL }}
+      # the fingerprint travels as a job output: a later job can replace the artifact, never this value
+      - name: Pack and fingerprint the plan
+        id: pack
+        run: |
+          tar -cf plan.tar -C catalog/dist .
+          echo "sha=$(sha256sum plan.tar | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plan
+          path: plan.tar
+          retention-days: 1
+
+  works:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions: {}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: pipx install uv
+      - uses: actions/download-artifact@v4
+        with:
+          name: plan
+          path: plan
+      - name: Start each new tool once (isolated)
+        run: |
+          mkdir todo && tar -xf plan/plan.tar -C todo ./works-todo.json
+          node scripts/run-works.ts todo/works-todo.json works.json --deadline-sec 1500
+      - uses: actions/upload-artifact@v4
+        with:
+          name: works
+          path: works.json
+          retention-days: 1
+
+  publish:
+    needs: [plan, works]
+    # publish even if the run checks failed: those tools simply stay pending
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v4
+        with:
+          name: plan
+          path: plan
+      - name: Use the plan only if it is exactly what the plan job made
+        run: |
+          echo "$PLAN_SHA  plan/plan.tar" | sha256sum -c -
+          mkdir -p catalog/dist && tar -xf plan/plan.tar -C catalog/dist
+        env:
+          PLAN_SHA: ${{ needs.plan.outputs.sha }}
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: works
+          path: works
+      - run: node scripts/apply-works.ts catalog/dist works/works.json
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: catalog/dist
+      - id: deployment
+        uses: actions/deploy-pages@v4

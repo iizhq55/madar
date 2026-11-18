@@ -1,0 +1,14 @@
+{
+  "name": "madar",
+  "owner": {
+    "name": "Madar"
+  },
+  "plugins": [
+    {
+      "name": "madar",
+      "source": "./plugin",
+      "description": "Madar (مدار): a store for AI tools and skills inside Claude Code."
+    }
+  ],
+  "description": "Madar (مدار): one store for AI tools, MCP servers and skills for Claude Code."
+}

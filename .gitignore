@@ -1,0 +1,6 @@
+.superpowers/
+node_modules/
+catalog/dist/
+.playwright-mcp/
+*.log
+docs/superpowers/

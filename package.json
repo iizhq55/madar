@@ -1,0 +1,19 @@
+{
+  "name": "madar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "npm run bundle && node --test --test-timeout=15000 \"test/**/*.test.ts\"",
+    "dev": "node scripts/dev.ts",
+    "bundle": "esbuild plugin/src/main.ts --bundle --platform=node --format=esm --target=node22 --outfile=plugin/dist/server.mjs --log-level=warning --banner:js=\"import { createRequire as __cr } from 'node:module'; const require = __cr(import.meta.url);\""
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.12"
+  }
+}

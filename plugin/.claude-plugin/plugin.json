@@ -1,0 +1,6 @@
+{
+  "name": "madar",
+  "version": "0.1.0",
+  "description": "Madar (مدار): a store for AI tools and skills. Browse, click Install, and Claude installs it for you.",
+  "license": "MIT"
+}

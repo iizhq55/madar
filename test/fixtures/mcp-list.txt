@@ -1,0 +1,5 @@
+Checking MCP server health…
+
+plugin:example-kit:notes: node /opt/example/notes.mjs - ✔ Connected
+playwright: npx -y @playwright/mcp@0.0.85 - ✔ Connected
+context7: https://mcp.context7.com/mcp (HTTP) - ✗ Failed to connect

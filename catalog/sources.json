@@ -1,0 +1,60 @@
+{
+  "registry": {
+    "url": "https://registry.modelcontextprotocol.io/v0/servers",
+    "limit": 10000
+  },
+  "marketplaces": [
+    "anthropics/claude-plugins-official"
+  ],
+  "skillRepos": [
+    "anthropics/skills"
+  ],
+  "trustedOrgs": [
+    "anthropics",
+    "microsoft",
+    "github",
+    "modelcontextprotocol",
+    "upstash",
+    "makenotion",
+    "google",
+    "cloudflare",
+    "stripe"
+  ],
+  "categories": {
+    "frontend-design": "design",
+    "webapp-testing": "dev",
+    "skill-creator": "productivity",
+    "canvas-design": "design",
+    "playwright": "browser",
+    "context7": "dev",
+    "notion": "productivity",
+    "code-review": "dev",
+    "commit-commands": "dev",
+    "puppeteer": "browser"
+  },
+  "skip": [
+    "template-skill"
+  ],
+  "namespaceOwners": {},
+  "discover": {
+    "topics": {
+      "marketplace": [
+        "claude-code-plugin",
+        "claude-code-plugins",
+        "claude-plugin",
+        "claude-plugins",
+        "claude-code-marketplace",
+        "claude-marketplace"
+      ],
+      "skills": [
+        "claude-skills",
+        "claude-skill",
+        "claude-code-skills",
+        "agent-skills",
+        "anthropic-skills"
+      ]
+    },
+    "minStars": 5,
+    "maxRepos": 300
+  }
+}

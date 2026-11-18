@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Madar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<canvas id="sky"></canvas>
+<div class="glow"></div>
+<div class="wrap">
+  <header>
+    <div class="logo"><div class="orb"></div><span data-t="brand"></span></div>
+    <label class="search">⌕ <input id="q" type="search" autocomplete="off"></label>
+    <div class="pill hide-sm" id="conn"><div class="dot"></div><span></span></div>
+    <span id="selfStar"></span>
+    <button class="pill lang" id="lang" type="button"></button>
+  </header>
+
+  <section class="hero">
+    <h1 data-t="heroTitle"></h1>
+    <p data-t="heroSub"></p>
+    <div class="stats" id="stats"></div>
+    <div class="setupbar" id="setupbar"></div>
+  </section>
+
+  <div class="tabs" id="tabs">
+    <button class="tab" data-tab="all" type="button"></button>
+    <button class="tab" data-tab="mcp" type="button"></button>
+    <button class="tab" data-tab="skill" type="button"></button>
+    <button class="tab" data-tab="plugin" type="button"></button>
+    <button class="tab" data-tab="installed" type="button"></button>
+    <div class="spacer"></div>
+  </div>
+
+  <div class="featured" id="featured"></div>
+  <h3 class="sec" id="secTitle"></h3>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

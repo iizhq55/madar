@@ -52,7 +52,8 @@ if (cfg) {
 
 const descriptions: Record<string, { ar?: string; en?: string }> = {}
 for (const f of readdirSync('catalog/descriptions')) if (f.endsWith('.json')) descriptions[f.slice(0, -5)] = JSON.parse(readFileSync(join('catalog/descriptions', f), 'utf8'))
-const curated = loadCatalog('plugin/catalog/seed.json').catalog.items
+const seed = loadCatalog('plugin/catalog/seed.json').catalog
+const curated = seed.items
 
 const t0 = Date.now()
 const r = await buildCatalog({
@@ -82,6 +83,9 @@ if (before >= 20 && after < before * 0.7) {
   process.exit(1)
 }
 r.catalog.items.sort((a, b) => Number(b.checked) - Number(a.checked) || b.stars - a.stars)
+// hand-picked bundles (like "Developer Kit") stay in the live catalog when all their items are there
+const have = new Set(r.catalog.items.map((i) => i.id))
+r.catalog.bundles = seed.bundles.filter((b) => b.items.every((id) => have.has(id)))
 writeFileSync(join(DIST, 'catalog.json'), JSON.stringify(r.catalog))
 writeFileSync(join(DIST, 'rejected.json'), JSON.stringify(r.rejected, null, 2))
 writeFileSync(join(DIST, 'state.json'), JSON.stringify(r.state))

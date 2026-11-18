@@ -5,9 +5,17 @@
 # Madar
 
 **One store for every AI tool, skill and plugin for Claude Code.**
-Browse 1,200+ MCP servers, skills and plugins, see each one in action, click **Install** — Claude installs it for you.
+Browse 19,000+ MCP servers, skills and plugins, see each one in action, click **Install** — Claude installs it for you.
+
+[![GitHub stars](https://img.shields.io/github/stars/iizhq55/madar?style=flat&color=ffd76a)](https://github.com/iizhq55/madar/stargazers)
+[![Release](https://img.shields.io/github/v/release/iizhq55/madar?color=8f95ff)](https://github.com/iizhq55/madar/releases)
+[![Catalog](https://img.shields.io/badge/catalog-19%2C000%2B%20tools-3ddc84)](https://iizhq55.github.io/madar/catalog.json)
+[![Made for Claude Code](https://img.shields.io/badge/made%20for-Claude%20Code-d97757)](https://claude.com/claude-code)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 **English** · [العربية](README.ar.md)
+
+<img src="docs/images/demo.gif" alt="Madar in action: click Install and Claude installs it, progress out of 100" width="100%">
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/O2I32AVDW0)
 
@@ -21,7 +29,7 @@ Finding good AI tools today means digging through GitHub, reading READMEs, copyi
 
 Madar turns that into a store:
 
-- **Everything in one place.** MCP servers from the official MCP registry, plugins from Claude Code marketplaces, and skills from GitHub. New ones are found automatically every hour.
+- **Everything in one place.** 19,000+ tools: MCP servers from the official MCP registry, plugins from 130+ Claude Code marketplaces, and skills from 130+ GitHub repos. New ones are found automatically every hour.
 - **See it before you install it.** Each tool shows its own pictures and video, what it does, and real GitHub numbers: stars, forks, open issues, contributors and last update.
 - **One click, no terminal.** Press **Install** and Claude does the rest, showing progress out of 100. Skills come back *installed and mastered*.
 - **Checked for safety.** Tools that pass every check carry a **✓ Checked** mark. Claude asks before installing anything unchecked.
